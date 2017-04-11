@@ -9,6 +9,7 @@ packer_cache/
 vendor
 Vagrantfile
 .vagrant/
+output-hyperv-iso/
 
 *.o
 *.lo
