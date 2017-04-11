@@ -1,0 +1,78 @@
+{
+  "variables": {
+    "iso_url": "d:/iso/SW_DVD9_Win_Svr_STD_Core_and_DataCtr_Core_2016_64Bit_English_-3_MLF_X21-30350.ISO",
+    "iso_checksum": "EEB465C08CF7243DBAAA3BE98F5F9E40",
+    "hv_vswitch": "vNAT"
+  },
+  "builders": [
+    {
+      "type": "hyperv-iso",
+      "guest_additions_mode": "disable",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "md5",
+      "cpu": 2,
+      "ram_size": 4096,
+      "disk_size": 20480,
+      "generation": 1,
+      "vm_name": "WS2016SC",
+      "communicator": "winrm",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "12h",
+      "switch_name": "{{ user `hv_vswitch` }}",
+      "shutdown_command": "C:/Windows/Panther/Unattend/packer_shutdown.cmd",
+      "boot_wait": "0s",
+      "floppy_files": [
+        "files/WS2016/Core/autounattend.xml",
+        "scripts/enable-winrm.ps1"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "powershell",
+      "scripts": [
+        "scripts/disable-windows-update.ps1",
+        "scripts/uninstall-windows-defender.ps1"
+      ]
+    },
+    {
+      "type": "windows-restart"
+    },
+    {
+      "type": "powershell",
+      "scripts": [
+        "scripts/install-chef.ps1",
+        "scripts/install-choco.ps1"
+      ]
+    },
+    {
+      "type": "powershell",
+      "inline": [
+        "New-Item -Path C:/Windows/Setup/Scripts -ItemType directory -Force",
+        "New-Item -Path C:/Windows/Panther/Unattend -ItemType directory -Force"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "files/WS2016/Core/packer_shutdown.cmd",
+      "destination": "C:/Windows/Panther/Unattend/packer_shutdown.cmd"
+    },
+    {
+      "type": "file",
+      "source": "files/WS2016/Core/sysprep.xml",
+      "destination": "C:/Windows/Panther/Unattend/Unattend.xml"
+    },
+    {
+      "type": "file",
+      "source": "files/WS2016/Core/SetupComplete.cmd",
+      "destination": "c:/windows/setup/scripts/SetupComplete.cmd"
+    },
+    {
+      "type": "file",
+      "source": "files/WS2016/Core/SetupComplete_onboot.ps1",
+      "destination": "c:/windows/setup/scripts/SetupComplete_onboot.ps1"
+    }
+  ]
+}
