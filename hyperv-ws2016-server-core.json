@@ -15,8 +15,9 @@
       "ram_size": 4096,
       "disk_size": 20480,
       "generation": 1,
-      "vm_name": "WS2016SC",
       "communicator": "winrm",
+      "vm_name": "packer-{{build_type}}",
+      "output_directory": "packer-{{build_type}}",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
       "winrm_timeout": "12h",
@@ -73,6 +74,12 @@
       "type": "file",
       "source": "files/WS2016/Core/SetupComplete_onboot.ps1",
       "destination": "c:/windows/setup/scripts/SetupComplete_onboot.ps1"
+    },
+    {
+      "type": "windows-shell",
+      "scripts": [
+        "scripts/show-version.cmd"
+      ]
     }
   ]
 }
