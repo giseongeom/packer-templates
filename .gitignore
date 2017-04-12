@@ -10,6 +10,7 @@ vendor
 Vagrantfile
 .vagrant/
 output-hyperv-iso/
+packer-hyperv-iso/
 
 *.o
 *.lo
