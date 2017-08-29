@@ -1,0 +1,19 @@
+<powershell>  
+# See http://engineering.daptiv.com/provisioning-windows-instances-with-packer-vagrant-and-chef-in-aws/
+net accounts /MAXPWAGE:UNLIMITED
+wmic useraccount WHERE "Name='Administrator'" set PasswordExpires=false
+
+winrm quickconfig -q  
+winrm set winrm/config '@{MaxTimeoutms="7200000"}'  
+winrm set winrm/config/service '@{AllowUnencrypted="true"}'  
+winrm set winrm/config/service/auth '@{Basic="true"}'
+
+netsh advfirewall firewall add rule name="WinRM 5985" protocol=TCP dir=in localport=5985 action=allow
+netsh advfirewall firewall add rule name="WinRM 5986" protocol=TCP dir=in localport=5986 action=allow
+
+# Turn off PowerShell execution policy restrictions
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine
+
+# Create c:\temp
+New-Item -Path 'c:\temp' -ItemType "directory" -Force
+</powershell>
