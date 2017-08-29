@@ -2,8 +2,8 @@ Packer templates for AzureRM
 ============================
 
 
-Template(s)
-===========
+## Template(s)
 
 ### ws2016-server-core-managed-disk.json
 
+### ws2012-r2-server-core-managed-disk.json
