@@ -8,11 +8,6 @@ Write-Host 'Installed Update(s) status:'
 Get-HotFix | Format-Table -AutoSize
 $os_version = (gcim Win32_operatingsystem).Version
 
-# Powershell 5+ on Windows Server 2012 R2
-if (($PSVersionTable.PSVersion.Major -ge 5) -and ( $os_version -eq '6.3.9600')) {
-  Write-Host 'Checking available update(s) status:'
-  Get-WUList -RootCategories 'Critical Updates','Security Updates','Update Rollups' -MicrosoftUpdate | Format-Table -AutoSize KB,Size,Title
-}
 
 # Windows Server 2016
 if ($os_version -like '10.*') {

@@ -6,7 +6,6 @@
     "object_id": "{{env `_MY_ARM_OBJECT_ID`}}",
     "tenant_id": "{{env `_MY_ARM_TENANT_ID`}}",
     "resource_group": "{{env `_MY_ARM_RESOURCE_GROUP`}}",
-    "vm_image_name": "ws2016-server-core-lab",
     "vm_location": "{{env `_MY_ARM_DEFAULT_LOCATION`}}",
     "vm_size": "Standard_DS2_v2"
   },
@@ -53,7 +52,6 @@
       "Set-ExecutionPolicy RemoteSigned -Force -Verbose",
       "Install-PackageProvider -Name NuGet -Force -Verbose",
       "Set-PSRepository -InstallationPolicy Trusted -Name PSGallery -Verbose",
-      "Install-module -Name PSWindowsUpdate -Force -Verbose",
       "Install-module -Name PSReadline -Force -Verbose",
       "Disable-WindowsOptionalFeature -Online -FeatureName Server-Gui-Shell -NoRestart -Verbose"
       ]
@@ -65,18 +63,8 @@
       "type": "powershell",
       "scripts": [
         "../scripts/install-chef.ps1",
-        "../scripts/install-choco.ps1",
-        "../scripts/show-windows-update-status.ps1"
+        "../scripts/install-choco.ps1"
       ]
-    },
-    {
-      "type": "powershell",
-      "scripts": [
-        "../scripts/install-windows-update.ps1"
-      ]
-    },
-    {
-      "type": "windows-restart"
     },
     {
       "type": "powershell",
