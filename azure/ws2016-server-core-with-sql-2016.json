@@ -6,7 +6,6 @@
     "object_id": "{{env `_MY_ARM_OBJECT_ID`}}",
     "tenant_id": "{{env `_MY_ARM_TENANT_ID`}}",
     "resource_group": "{{env `_MY_ARM_RESOURCE_GROUP`}}",
-    "vm_image_name": "ws2016-server-core-lab",
     "vm_location": "{{env `_MY_ARM_DEFAULT_LOCATION`}}",
     "vm_size": "Standard_DS2_v2",
     "sql_iso_url": "{{env `_MY_ARM_ISO_URL`}}",
