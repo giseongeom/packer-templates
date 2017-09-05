@@ -6,7 +6,6 @@
     "object_id": "{{env `_MY_ARM_OBJECT_ID`}}",
     "tenant_id": "{{env `_MY_ARM_TENANT_ID`}}",
     "resource_group": "{{env `_MY_ARM_RESOURCE_GROUP`}}",
-    "vm_image_name": "ws2016-server-core-lab",
     "vm_location": "{{env `_MY_ARM_DEFAULT_LOCATION`}}",
     "vm_size": "Standard_DS2_v2"
   },
@@ -20,12 +19,12 @@
     "object_id": "{{user `object_id`}}",
 
     "managed_image_resource_group_name": "{{user `resource_group`}}",
-    "managed_image_name": "ami-ws2016-core-{{isotime \"2006.01.02-1504\"}}",
+    "managed_image_name": "ami-ws2012-r2-core--{{isotime \"2006.01.02-1504\"}}",
 
     "os_type": "Windows",
     "image_publisher": "MicrosoftWindowsServer",
     "image_offer": "WindowsServer",
-    "image_sku": "2016-Datacenter-Server-Core",
+    "image_sku": "2012-R2-Datacenter",
 
     "communicator": "winrm",
     "winrm_use_ssl": "true",
@@ -36,23 +35,36 @@
     "location": "{{user `vm_location`}}",
     "vm_size": "{{user `vm_size`}}"
   }],
+
   "provisioners": [
     {
       "type": "powershell",
       "scripts": [
-        "../scripts/install-chef.ps1",
-        "../scripts/install-choco.ps1",
-        "../scripts/show-windows-update-status.ps1"
-      ]
-    },
-    {
-      "type": "powershell",
-      "scripts": [
-        "../scripts/install-windows-update.ps1"
+        "../scripts/install-wmf5.1-on-ws2012-r2.ps1"
       ]
     },
     {
       "type": "windows-restart"
+    },
+    {
+      "type": "powershell",
+    "inline": [
+      "Set-ExecutionPolicy RemoteSigned -Force -Verbose",
+      "Install-PackageProvider -Name NuGet -Force -Verbose",
+      "Set-PSRepository -InstallationPolicy Trusted -Name PSGallery -Verbose",
+      "Install-module -Name PSReadline -Force -Verbose",
+      "Disable-WindowsOptionalFeature -Online -FeatureName Server-Gui-Shell -NoRestart -Verbose"
+      ]
+    },
+    {
+      "type": "windows-restart"
+    },
+    {
+      "type": "powershell",
+      "scripts": [
+        "../scripts/install-chef.ps1",
+        "../scripts/install-choco.ps1"
+      ]
     },
     {
       "type": "powershell",

@@ -6,9 +6,13 @@
     "object_id": "{{env `_MY_ARM_OBJECT_ID`}}",
     "tenant_id": "{{env `_MY_ARM_TENANT_ID`}}",
     "resource_group": "{{env `_MY_ARM_RESOURCE_GROUP`}}",
+    "vm_image_name": "ws2016-server-core-lab",
     "vm_location": "{{env `_MY_ARM_DEFAULT_LOCATION`}}",
-    "vm_size": "Standard_DS2_v2"
+    "vm_size": "Standard_DS2_v2",
+    "sql_iso_url": "{{env `_MY_ARM_ISO_URL`}}",
+    "sql_sa_pwd": "{{env `_MY_SQL_SERVER_DEFAULT_USER_PW`}}"
   },
+
   "builders": [{
     "type": "azure-arm",
 
@@ -19,12 +23,12 @@
     "object_id": "{{user `object_id`}}",
 
     "managed_image_resource_group_name": "{{user `resource_group`}}",
-    "managed_image_name": "ami-ws2012-r2-core-{{isotime \"2006.01.02-1504\"}}",
+    "managed_image_name": "ami-ws2016-core-with-sql-2016--{{isotime \"2006.01.02-1504\"}}",
 
     "os_type": "Windows",
     "image_publisher": "MicrosoftWindowsServer",
     "image_offer": "WindowsServer",
-    "image_sku": "2012-R2-Datacenter",
+    "image_sku": "2016-Datacenter-Server-Core",
 
     "communicator": "winrm",
     "winrm_use_ssl": "true",
@@ -35,30 +39,7 @@
     "location": "{{user `vm_location`}}",
     "vm_size": "{{user `vm_size`}}"
   }],
-
   "provisioners": [
-    {
-      "type": "powershell",
-      "scripts": [
-        "../scripts/install-wmf5.1-on-ws2012-r2.ps1"
-      ]
-    },
-    {
-      "type": "windows-restart"
-    },
-    {
-      "type": "powershell",
-    "inline": [
-      "Set-ExecutionPolicy RemoteSigned -Force -Verbose",
-      "Install-PackageProvider -Name NuGet -Force -Verbose",
-      "Set-PSRepository -InstallationPolicy Trusted -Name PSGallery -Verbose",
-      "Install-module -Name PSReadline -Force -Verbose",
-      "Disable-WindowsOptionalFeature -Online -FeatureName Server-Gui-Shell -NoRestart -Verbose"
-      ]
-    },
-    {
-      "type": "windows-restart"
-    },
     {
       "type": "powershell",
       "scripts": [
@@ -76,12 +57,6 @@
       "type": "windows-restart"
     },
     {
-      "type": "powershell",
-      "scripts": [
-        "../scripts/show-windows-update-status.ps1"
-      ]
-    },
-    {
       "type": "windows-shell",
     "inline": [
       "choco install -y sysinternals",
@@ -89,6 +64,30 @@
       "choco install -y awscli",
       "choco install -y 7zip.portable curl wget nssm git"
       ]
+    },
+    {
+      "type": "windows-shell",
+    "inline": [
+      "cd /d c:\\windows\\temp",
+      "wget -nd -nH -O sql.iso -q {{user `sql_iso_url`}}",
+      "setx /m SQLPWD {{user `sql_sa_pwd`}}"
+      ]
+    },
+    {
+      "type": "powershell",
+      "scripts": [
+        "../scripts/sqlserver-2016-prepareImage.ps1"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "../files/WS2016/SetupComplete2-azure-with-sql-2016.cmd",
+      "destination": "c:/windows/OEM/SetupComplete2.cmd"
+    },
+    {
+      "type": "file",
+      "source": "../files/WS2016/SetupComplete2-azure-with-sql-2016.ps1",
+      "destination": "c:/windows/OEM/SetupComplete2-azure-with-sql-2016.ps1"
     },
     {
       "type": "windows-shell",

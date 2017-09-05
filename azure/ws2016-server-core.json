@@ -1,0 +1,79 @@
+{
+  "variables": {
+    "client_id": "{{env `_MY_ARM_CLIENT_ID`}}",
+    "client_secret": "{{env `_MY_ARM_CLIENT_SECRET`}}",
+    "subscription_id": "{{env `_MY_ARM_SUBSCRIPTION_ID`}}",
+    "object_id": "{{env `_MY_ARM_OBJECT_ID`}}",
+    "tenant_id": "{{env `_MY_ARM_TENANT_ID`}}",
+    "resource_group": "{{env `_MY_ARM_RESOURCE_GROUP`}}",
+    "vm_location": "{{env `_MY_ARM_DEFAULT_LOCATION`}}",
+    "vm_size": "Standard_DS2_v2"
+  },
+  "builders": [{
+    "type": "azure-arm",
+
+    "client_id": "{{user `client_id`}}",
+    "client_secret": "{{user `client_secret`}}",
+    "subscription_id": "{{user `subscription_id`}}",
+    "tenant_id": "{{user `tenant_id`}}",
+    "object_id": "{{user `object_id`}}",
+
+    "managed_image_resource_group_name": "{{user `resource_group`}}",
+    "managed_image_name": "ami-ws2016-core--{{isotime \"2006.01.02-1504\"}}",
+
+    "os_type": "Windows",
+    "image_publisher": "MicrosoftWindowsServer",
+    "image_offer": "WindowsServer",
+    "image_sku": "2016-Datacenter-Server-Core",
+
+    "communicator": "winrm",
+    "winrm_use_ssl": "true",
+    "winrm_insecure": "true",
+    "winrm_timeout": "3m",
+    "winrm_username": "packer",
+
+    "location": "{{user `vm_location`}}",
+    "vm_size": "{{user `vm_size`}}"
+  }],
+  "provisioners": [
+    {
+      "type": "powershell",
+      "scripts": [
+        "../scripts/install-chef.ps1",
+        "../scripts/install-choco.ps1"
+      ]
+    },
+    {
+      "type": "powershell",
+      "scripts": [
+        "../scripts/disable-windows-smb1.ps1"
+      ]
+    },
+    {
+      "type": "windows-restart"
+    },
+    {
+      "type": "windows-shell",
+    "inline": [
+      "choco install -y sysinternals",
+      "choco install -y azure-cli azcopy",
+      "choco install -y awscli",
+      "choco install -y 7zip.portable curl wget nssm git"
+      ]
+    },
+    {
+      "type": "windows-shell",
+      "scripts": [
+        "../scripts/show-version.cmd"
+      ]
+    },
+    {
+    "type": "powershell",
+    "inline": [
+      "if( Test-Path $Env:SystemRoot\\windows\\system32\\Sysprep\\unattend.xml ){ rm $Env:SystemRoot\\windows\\system32\\Sysprep\\unattend.xml -Force}",
+      "& $Env:SystemRoot\\System32\\Sysprep\\Sysprep.exe /oobe /generalize /shutdown /quiet"
+      ]
+    }
+  ]
+}
+
