@@ -20,6 +20,7 @@
 
     "managed_image_resource_group_name": "{{user `resource_group`}}",
     "managed_image_name": "ami-ws2012-r2-core--{{isotime \"2006.01.02-1504\"}}",
+    "managed_image_storage_account_type": "Premium_LRS",
 
     "os_type": "Windows",
     "image_publisher": "MicrosoftWindowsServer",
@@ -41,7 +42,8 @@
       "type": "powershell",
       "scripts": [
         "../scripts/install-wmf5.1-on-ws2012-r2.ps1"
-      ]
+      ],
+      "pause_before": "300s"
     },
     {
       "type": "windows-restart"
@@ -97,11 +99,23 @@
       ]
     },
     {
+      "type": "powershell",
+      "scripts": [
+        "../scripts/show-AzureGuestInfo.ps1"
+      ]
+    },
+    {
     "type": "powershell",
     "inline": [
       "if( Test-Path $Env:SystemRoot\\windows\\system32\\Sysprep\\unattend.xml ){ rm $Env:SystemRoot\\windows\\system32\\Sysprep\\unattend.xml -Force}",
       "& $Env:SystemRoot\\System32\\Sysprep\\Sysprep.exe /oobe /generalize /shutdown /quiet"
       ]
+    },
+    {
+      "type": "shell-local",
+      "execute_command": ["cmd.exe","/C","{{.Command}}"],
+      "command": "echo provision is done %DATE% - %TIME%",
+      "pause_before": "120s" 
     }
   ]
 }
