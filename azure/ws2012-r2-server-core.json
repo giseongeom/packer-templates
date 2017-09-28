@@ -19,7 +19,7 @@
     "object_id": "{{user `object_id`}}",
 
     "managed_image_resource_group_name": "{{user `resource_group`}}",
-    "managed_image_name": "ami-ws2012-r2-core--{{isotime \"2006.01.02-1504\"}}",
+    "managed_image_name": "ami-2012-R2-Datacenter--{{isotime \"2006.01.02-1504\"}}",
     "managed_image_storage_account_type": "Premium_LRS",
 
     "os_type": "Windows",
@@ -88,8 +88,8 @@
     "inline": [
       "choco install -y sysinternals",
       "choco install -y azure-cli azcopy",
-      "choco install -y awscli",
-      "choco install -y 7zip.portable curl wget nssm git"
+      "choco install -y 7zip.portable curl wget nssm git",
+      "choco install -y --version 1.11.159 awscli"
       ]
     },
     {

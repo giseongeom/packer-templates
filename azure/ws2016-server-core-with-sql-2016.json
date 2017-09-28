@@ -22,7 +22,8 @@
     "object_id": "{{user `object_id`}}",
 
     "managed_image_resource_group_name": "{{user `resource_group`}}",
-    "managed_image_name": "ami-ws2016-core-with-sql-2016--{{isotime \"2006.01.02-1504\"}}",
+    "managed_image_name": "ami-2016-Datacenter-Server-Core-SQL-2016-Eval--{{isotime \"2006.01.02-1504\"}}",
+    "managed_image_storage_account_type": "Premium_LRS",
 
     "os_type": "Windows",
     "image_publisher": "MicrosoftWindowsServer",
@@ -44,7 +45,8 @@
       "scripts": [
         "../scripts/install-chef.ps1",
         "../scripts/install-choco.ps1"
-      ]
+      ],
+      "pause_before": "300s"
     },
     {
       "type": "powershell",
@@ -60,8 +62,8 @@
     "inline": [
       "choco install -y sysinternals",
       "choco install -y azure-cli azcopy",
-      "choco install -y awscli",
-      "choco install -y 7zip.portable curl wget nssm git"
+      "choco install -y 7zip.portable curl wget nssm git",
+      "choco install -y --version 1.11.159 awscli"
       ]
     },
     {
@@ -95,11 +97,23 @@
       ]
     },
     {
+      "type": "powershell",
+      "scripts": [
+        "../scripts/show-AzureGuestInfo.ps1"
+      ]
+    },
+    {
     "type": "powershell",
     "inline": [
       "if( Test-Path $Env:SystemRoot\\windows\\system32\\Sysprep\\unattend.xml ){ rm $Env:SystemRoot\\windows\\system32\\Sysprep\\unattend.xml -Force}",
       "& $Env:SystemRoot\\System32\\Sysprep\\Sysprep.exe /oobe /generalize /shutdown /quiet"
       ]
+    },
+    {
+      "type": "shell-local",
+      "execute_command": ["cmd.exe","/C","{{.Command}}"],
+      "command": "echo provision is done %DATE% - %TIME%",
+      "pause_before": "120s" 
     }
   ]
 }
