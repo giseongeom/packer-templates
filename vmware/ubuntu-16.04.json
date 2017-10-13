@@ -6,12 +6,13 @@
     "type": "vmware-iso",
     "guest_os_type": "ubuntu-64",
     "disk_size": 149504,
+    "disk_type_id": 0,
+    "headless": true,
     "vmx_data": {
       "numvcpus": "1",
       "cpuid.coresPerSocket": "2",
       "memsize": "2048"
     },
-    "format": "ova",
     "iso_url": "http://ftp.daumkakao.com/ubuntu-releases/16.04.3/ubuntu-16.04.3-server-amd64.iso",
     "iso_checksum": "10fcd20619dce11fe094e960c85ba4a9",
     "iso_checksum_type": "md5",
