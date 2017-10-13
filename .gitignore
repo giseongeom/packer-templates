@@ -1,7 +1,4 @@
 iso
-output-virtualbox-iso
-output-hyperv-iso
-output-qemu
 *.iso
 *.box
 .kitchen
@@ -9,8 +6,10 @@ packer_cache/
 vendor
 Vagrantfile
 .vagrant/
-output-hyperv-iso/
-packer-hyperv-iso/
+output-virtualbox-iso
+output-hyperv-iso
+output-vmware-iso
+output-qemu
 
 *.o
 *.lo
