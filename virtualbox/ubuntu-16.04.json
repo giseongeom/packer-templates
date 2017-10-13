@@ -7,6 +7,8 @@
     "guest_os_type": "Ubuntu_64",
     "disk_size": 149504,
     "hard_drive_interface": "scsi",
+    "vm_name": "packer-ova-{{isotime \"2006.01.02-1504\"}}",
+    "headless": true,
     "vboxmanage": [
        ["modifyvm", "{{.Name}}", "--memory", "2048"],
        ["modifyvm", "{{.Name}}", "--cpus", "2"],
