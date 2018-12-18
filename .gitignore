@@ -70,3 +70,21 @@ terraform.tfvars
 
 # vagrant
 *.vagrant/
+
+# packer - files
+*.iso
+*.box
+var-media*.json
+var-cred*.json
+packer_cache/
+
+# packer - dirs
+output-virtualbox-iso/
+output-virtualbox-iso/
+output-hyperv-iso/
+output-vmware-iso/
+output-qemu/
+output/
+
+# misc
+.hidden/
