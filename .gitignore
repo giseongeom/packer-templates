@@ -88,3 +88,6 @@ output/
 
 # misc
 .hidden/
+
+# sysprep
+adv-sysprep.xml
