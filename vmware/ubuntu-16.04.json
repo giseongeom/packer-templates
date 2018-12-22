@@ -1,52 +1,155 @@
 {
-  "variables": {
-  },
+  "variables": {},
   "builders": [
     {
-    "type": "vmware-iso",
-    "guest_os_type": "ubuntu-64",
-    "disk_size": 149504,
-    "disk_type_id": 0,
-    "headless": true,
-    "vmx_data": {
-      "numvcpus": "1",
-      "cpuid.coresPerSocket": "2",
-      "memsize": "2048"
+      "type": "vmware-iso",
+      "guest_os_type": "ubuntu-64",
+      "disk_size": 149504,
+      "disk_type_id": 0,
+      "headless": false,
+      "cpus": 2,
+      "memory": 4096,
+      "vm_name": "ubuntu-16.04-{{isotime \"2006.01.02-1504\"}}",
+      "iso_url": "http://mirror.kakao.com/ubuntu-releases/16.04.5/ubuntu-16.04.5-server-amd64.iso",
+      "iso_checksum": "24636fd103a2a43c95659f1c3c63718e",
+      "iso_checksum_type": "md5",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "20m",
+      "http_directory": "ubuntu/Ubuntu-16.04",
+      "output_directory": "./output-vmware-iso/{{ timestamp }}-ubuntu-16.04-{{isotime \"20060102\"}}",
+      "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+      "boot_wait": "10s",
+      "boot_command": [
+        "<enter><wait><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "/install/vmlinuz<wait>",
+        " auto<wait>",
+        " console-setup/ask_detect=false<wait>",
+        " console-setup/layoutcode=us<wait>",
+        " console-setup/modelcode=pc105<wait>",
+        " debconf/frontend=noninteractive<wait>",
+        " debian-installer=en_US<wait>",
+        " fb=false<wait>",
+        " initrd=/install/initrd.gz<wait>",
+        " kbd-chooser/method=us<wait>",
+        " keyboard-configuration/layout=USA<wait>",
+        " keyboard-configuration/variant=USA<wait>",
+        " locale=en_US<wait>",
+        " domain=lab<wait>",
+        " hostname=ubuntu<wait>",
+        " grub-installer/bootdev=/dev/sda<wait>",
+        " noapic<wait>",
+        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
+        " -- <wait>",
+        "<enter><wait>"
+      ]
     },
-    "iso_url": "http://ftp.daumkakao.com/ubuntu-releases/16.04.3/ubuntu-16.04.3-server-amd64.iso",
-    "iso_checksum": "10fcd20619dce11fe094e960c85ba4a9",
-    "iso_checksum_type": "md5",
-    "ssh_username": "vagrant",
-    "ssh_password": "vagrant",
-    "ssh_wait_timeout": "20m",
-    "http_directory" : "../files/Ubuntu-16.04",
-    "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
-    "boot_wait": "10s",
-    "boot_command": [
-      "<enter><wait><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-      "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-      "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-      "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-      "/install/vmlinuz<wait>",
-      " auto<wait>",
-      " console-setup/ask_detect=false<wait>",
-      " console-setup/layoutcode=us<wait>",
-      " console-setup/modelcode=pc105<wait>",
-      " debconf/frontend=noninteractive<wait>",
-      " debian-installer=en_US<wait>",
-      " fb=false<wait>",
-      " initrd=/install/initrd.gz<wait>",
-      " kbd-chooser/method=us<wait>",
-      " keyboard-configuration/layout=USA<wait>",
-      " keyboard-configuration/variant=USA<wait>",
-      " locale=en_US<wait>",
-      " domain=lab<wait>",
-      " hostname=ubuntu<wait>",
-      " grub-installer/bootdev=/dev/sda<wait>",
-      " noapic<wait>",
-      " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
-      " -- <wait>",
-      "<enter><wait>"
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "Ubuntu_64",
+      "disk_size": 149504,
+      "hard_drive_interface": "scsi",
+      "vm_name": "ubuntu-16.04-{{isotime \"2006.01.02-1504\"}}",
+      "headless": true,
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "2048"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "2"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--vram",
+          "32"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--audio",
+          "none"
+        ]
+      ],
+      "format": "ova",
+      "iso_url": "http://mirror.kakao.com/ubuntu-releases/16.04.5/ubuntu-16.04.5-server-amd64.iso",
+      "iso_checksum": "24636fd103a2a43c95659f1c3c63718e",
+      "iso_checksum_type": "md5",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "20m",
+      "http_directory": "ubuntu/Ubuntu-16.04",
+      "output_directory": "./output-virtualbox-iso/{{ timestamp }}-ubuntu-16.04-{{isotime \"20060102\"}}",
+      "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+      "boot_wait": "10s",
+      "boot_command": [
+        "<enter><wait><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "/install/vmlinuz<wait>",
+        " auto<wait>",
+        " console-setup/ask_detect=false<wait>",
+        " console-setup/layoutcode=us<wait>",
+        " console-setup/modelcode=pc105<wait>",
+        " debconf/frontend=noninteractive<wait>",
+        " debian-installer=en_US<wait>",
+        " fb=false<wait>",
+        " initrd=/install/initrd.gz<wait>",
+        " kbd-chooser/method=us<wait>",
+        " keyboard-configuration/layout=USA<wait>",
+        " keyboard-configuration/variant=USA<wait>",
+        " locale=en_US<wait>",
+        " domain=lab<wait>",
+        " hostname=ubuntu<wait>",
+        " grub-installer/bootdev=/dev/sda<wait>",
+        " noapic<wait>",
+        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
+        " -- <wait>",
+        "<enter><wait>"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | sudo -H -S -E bash '{{ .Path }}'",
+      "only": [
+        "virtualbox-iso"
+      ],
+      "inline": [
+        "mkdir -p /tmp/virtualbox",
+        "mount -t iso9660 -o loop,ro /home/vagrant/VBoxGuestAdditions.iso /tmp/virtualbox",
+        "/tmp/virtualbox/VBoxLinuxAdditions.run --nox11 2>&1 || true",
+        "umount /tmp/virtualbox"
+      ]
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | sudo -H -S -E bash '{{ .Path }}'",
+      "only": [
+        "vmware-iso"
+      ],
+      "inline": [
+        "apt update",
+        "apt install -y open-vm-tools"
+      ]
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | sudo -H -S -E bash '{{ .Path }}'",
+      "inline": [
+        "apt update",
+        "apt upgrade -y"
       ]
     }
   ]
