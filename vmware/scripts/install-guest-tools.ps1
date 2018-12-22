@@ -1,3 +1,5 @@
+#Requires -version 5
+
 # Set the path of the VMWare Tools ISO - this is set in the Packer JSON file
 
 $isopath = "C:\Windows\Temp\windows.iso"

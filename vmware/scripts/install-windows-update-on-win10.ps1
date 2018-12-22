@@ -1,4 +1,6 @@
-﻿# See 
+﻿#Requires -version 5
+
+# See 
 # https://www.altaro.com/msp-dojo/powershell-windows-updates/
 
 Import-Module PSWindowsUpdate -force
