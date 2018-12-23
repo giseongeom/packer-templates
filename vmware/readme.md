@@ -12,7 +12,7 @@ Packer templates (VMware/VirtualBox)
   * LTSC 2019 Enterprise English
   * LTSC 2019 Enterprise Evaulation
   * LTSC 2019 Enterprise Korean
-* Windows Server LTSB 2016 
+* Windows Server LTSB (Long-Term Servicing Branch) 2016 
   * LTSB 2016 Datacenter English (with Desktop experience)
   * LTSB 2016 Datacenter English (with Desktop experience) Evaulation
   * LTSB 2016 Datacenter English (with Core)
