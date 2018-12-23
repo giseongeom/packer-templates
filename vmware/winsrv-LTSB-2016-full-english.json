@@ -1,0 +1,135 @@
+{
+    "variables": {
+        "floppy_data": "winsrv/Win_Svr_2016_DataCtr_LTSB_Full_English/Autounattend.xml,scripts/configure-windows10.ps1",
+        "install_media": "Win_Svr_2016_DataCtr_LTSB_Full_English",
+        "iso_path": "e:/iso/Microsoft/Windows.Server_2016_LTSB/SW_DVD9_Win_Svr_STD_Core_and_DataCtr_Core_2016_64Bit_English_-3_MLF_X21-30350.ISO",
+        "iso_md5": "EEB465C08CF7243DBAAA3BE98F5F9E40"
+    },
+    "builders": [
+        {
+            "type": "vmware-iso",
+            "disable_vnc": true,
+            "vm_name": "{{user `install_media`}}-{{isotime \"2006.01.02-1504\"}}",
+            "output_directory": "./output-vmware-iso/{{ timestamp }}-{{user `install_media`}}-{{isotime \"20060102\"}}",
+            "communicator": "winrm",
+            "disk_type_id": 0,
+            "disk_size": 149504,
+            "floppy_files": "{{user `floppy_data`}}",
+            "guest_os_type": "windows9srv-64",
+            "iso_url": "{{user `iso_path`}}",
+            "iso_checksum_type": "md5",
+            "iso_checksum": "{{user `iso_md5`}}",
+            "winrm_username": "administrator",
+            "winrm_password": "vagrant",
+            "winrm_timeout": "6h",
+            "headless": false,
+            "skip_compaction": false,
+            "keep_registered": false,
+            "tools_upload_flavor": "windows",
+            "tools_upload_path": "c:/Windows/Temp/windows.iso",
+            "shutdown_command": "C:/Windows/temp/packer_shutdown.cmd",
+            "cpus": 2,
+            "memory": 8192,
+            "usb": true,
+            "Version": 14,
+            "network": "nat",
+            "network_adapter_type": "e1000e",
+            "disk_adapter_type": "lsisas1068",
+            "cdrom_adapter_type": "sata"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "powershell",
+            "scripts": [
+                "./scripts/install-ps-modules.ps1",
+                "./scripts/install-guest-tools.ps1"
+            ]
+        },
+        {
+            "type": "windows-restart"
+        },
+        {
+            "type": "file",
+            "source": "./winsrv/{{user `install_media`}}/sysprep/",
+            "destination": "c:/windows/temp/sysprep"
+        },
+        {
+            "type": "file",
+            "source": "./scripts/packer_shutdown_win10.cmd",
+            "destination": "c:/windows/temp/packer_shutdown.cmd"
+        },
+        {
+            "type": "file",
+            "source": "./scripts/SetupComplete_win10.cmd",
+            "destination": "c:/windows/setup/scripts/SetupComplete.cmd"
+        },
+        {
+            "type": "powershell",
+            "scripts": [
+                "./scripts/install-windows-update-on-win10.ps1",
+                "./scripts/disable-autologin.ps1"
+            ]
+        },
+        {
+            "pause_before": "60s",
+            "restart_timeout": "30m",
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+            "pause_before": "10s",
+            "scripts": [
+                "./scripts/install-windows-update-on-win10.ps1"
+            ]
+        },
+        {
+            "pause_before": "30s",
+            "restart_timeout": "30m",
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+            "pause_before": "10s",
+            "scripts": [
+                "./scripts/install-windows-update-on-win10.ps1"
+            ]
+        },
+        {
+            "pause_before": "30s",
+            "restart_timeout": "30m",
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+            "pause_before": "10s",
+            "scripts": [
+                "./scripts/install-windows-update-on-win10.ps1"
+            ]
+        },
+        {
+            "pause_before": "30s",
+            "restart_timeout": "30m",
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+            "pause_before": "10s",
+            "scripts": [
+                "./scripts/install-windows-update-on-win10.ps1"
+            ]
+        },
+        {
+            "pause_before": "30s",
+            "restart_timeout": "30m",
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+            "inline": [
+                "Start-Sleep 10"
+            ]
+        }
+    ],
+    "post-processors": []
+}
