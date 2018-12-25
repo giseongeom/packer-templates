@@ -28,6 +28,12 @@ Packer templates (VMware/VirtualBox)
   * Ubuntu Server 16.04 / 64-bit
 
 
+## Work-In-Progress
+* Windows 7
+* Windows Server 2008 R2
+* Windows Server 2012 R2
+
+
 ## HOW-TO-BUILD
 
 * Windows 10 SAC 1809 Evaluation
@@ -108,8 +114,6 @@ vmware-iso output will be in this color.
     vmware-iso: Currently processing the following update:
     vmware-iso: 2 VAGRANT-F... Downloaded KB4470502   53MB 2018-12 Cumulative Update for .NET Framework 3.5 and 4.7.2 for Windows 10...
     vmware-iso: 2 VAGRANT-F... Downloaded KB2267602  130MB Definition Update for Windows Defender Antivirus - KB2267602 (Definition ...
-    vmware-iso: 3 VAGRANT-F... Installed  KB4471331   21MB 2018-12 Security Update for Adobe Flash Player for Windows 10 Version 180...
-    vmware-iso: 3 VAGRANT-F... Installed  KB4471331   21MB 2018-12 Security Update for Adobe Flash Player for Windows 10 Version 180...
     vmware-iso: 3 VAGRANT-F... Installed  KB4471331   21MB 2018-12 Security Update for Adobe Flash Player for Windows 10 Version 180...
     vmware-iso: 3 VAGRANT-F... Installed  KB890830    46MB Windows Malicious Software Removal Tool x64 - December 2018 (KB890830)
     vmware-iso: 3 VAGRANT-F... Installed  KB4470502   53MB 2018-12 Cumulative Update for .NET Framework 3.5 and 4.7.2 for Windows 10...
