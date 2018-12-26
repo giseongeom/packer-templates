@@ -18,9 +18,17 @@ if ($null -ne $updates) {
     Invoke-WUjob -Confirm:$false -RunNow -Script $WUJob_Script
 
     "Currently processing the following update:"
+    Start-Sleep 30
+    $log1 = ''
+    $log2 = ''
     While ((Get-ScheduledTask -TaskName pswindowsupdate).state -eq 'Running') {
-        Get-Content -ErrorAction SilentlyContinue C:\Windows\temp\PSWindowsUpdate.log | select-object -last 1
-        Start-Sleep 15
+        $log1=(Get-Content -ErrorAction SilentlyContinue C:\Windows\temp\PSWindowsUpdate.log | select-object -last 1)
+        if ($log1 -ne $log2) { $log1 }
+              
+        Start-Sleep 10
+        
+        $log2=(Get-Content -ErrorAction SilentlyContinue C:\Windows\temp\PSWindowsUpdate.log | select-object -last 1)
+        if ($log2 -ne $log1) { $log2 }
     }
 
     if ((Get-ScheduledTask -TaskName pswindowsupdate).state -eq 'Ready') {
