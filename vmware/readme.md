@@ -4,34 +4,41 @@ Packer templates (VMware/VirtualBox)
 
 ## Supported
 
+* Windows 7 Enterprise / 64-bit
+  * Windows 7 with SP1 English / Korean
 * Windows 10 SAC (Semi-Annual Channel) / 64-bit
-  * SAC 1809 Enterprise English
+  * SAC 1809 Enterprise English / Korean
   * SAC 1809 Enterprise Evaulation
-  * SAC 1809 Enterprise Korean
 * Windows 10 LTSC (Long-Term Servicing Channel) / 64-bit
-  * LTSC 2019 Enterprise English
+  * LTSC 2019 Enterprise English / Korean
   * LTSC 2019 Enterprise Evaulation
-  * LTSC 2019 Enterprise Korean
 * Windows Server SAC (Semi-Annual Channel) 
-  * SAC 1809 Datacenter English
+  * SAC 1809 Datacenter English (Server Core)
 * Windows Server LTSC (Long-Term Servicing Channel) 2019 
-  * LTSC 2019 Datacenter English (with Desktop experience)
-  * LTSC 2019 Datacenter English (with Desktop experience) Evaulation
-  * LTSC 2019 Datacenter English
-  * LTSC 2019 Datacenter Korean  (with Desktop experience) 
+  * LTSC 2019 Datacenter English / Korean (with Desktop experience)
+  * LTSC 2019 Datacenter Evaulation (with Desktop experience)
+  * LTSC 2019 Datacenter English (Server Core)
 * Windows Server LTSB (Long-Term Servicing Branch) 2016 
-  * LTSB 2016 Datacenter English (with Desktop experience)
-  * LTSB 2016 Datacenter English (with Desktop experience) Evaulation
-  * LTSB 2016 Datacenter English
-  * LTSB 2016 Datacenter Korean  (with Desktop experience) 
+  * LTSB 2016 Datacenter English / Korean  (with Desktop experience)
+  * LTSB 2016 Datacenter Evaulation (with Desktop experience)
+  * LTSB 2016 Datacenter English (Server Core)
 * Ubuntu
   * Ubuntu Server 16.04 / 64-bit
 
 
 ## Work-In-Progress
-* Windows 7
 * Windows Server 2008 R2
 * Windows Server 2012 R2
+
+
+## Test/Build Environment
+* packer 1.3.3
+* Windows 10 1809 (64-bit)
+* VMware Workstation 15.0.2
+* VirtualBox 5.2.22
+* Visual Studio Code
+* Conemu
+* Powershell 6
 
 
 ## HOW-TO-BUILD

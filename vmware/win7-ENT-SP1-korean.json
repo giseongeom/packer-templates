@@ -1,0 +1,172 @@
+{
+    "variables": {
+        "floppy_data": "win7/Win_7_Ent_SP1_Korean/Autounattend.xml,scripts/configure-windows7.ps1",
+        "win_media": "Win_7_Ent_SP1_Korean",
+        "iso_path": "e:/iso/Microsoft/WIN7/SW_DVD5_SA_Win_Ent_K_7w_SP1_64BIT_Korean_-2_MLF_X17-59119.ISO",
+        "iso_md5": "2582CB10A56FAA9E96FB11479CDA89A4"
+    },
+    "builders": [
+        {
+            "type": "vmware-iso",
+            "disable_vnc": true,
+            "vm_name": "{{user `win_media`}}-{{isotime \"20060102-1504\"}}",
+            "output_directory": "./output-vmware-iso/{{ timestamp }}-{{user `win_media`}}-{{isotime \"20060102\"}}",
+            "communicator": "winrm",
+            "disk_type_id": 0,
+            "disk_size": 149504,
+            "floppy_files": "{{user `floppy_data`}}",
+            "guest_os_type": "windows7-64",
+            "iso_url": "{{user `iso_path`}}",
+            "iso_checksum_type": "md5",
+            "iso_checksum": "{{user `iso_md5`}}",
+            "winrm_username": "administrator",
+            "winrm_password": "vagrant",
+            "winrm_timeout": "6h",
+            "headless": false,
+            "skip_compaction": true,
+            "keep_registered": false,
+            "tools_upload_flavor": "windows",
+            "tools_upload_path": "c:/Windows/Temp/windows.iso",
+            "shutdown_command": "C:/Windows/temp/packer_shutdown.cmd",
+            "shutdown_timeout": "1h",
+            "cpus": 2,
+            "memory": 8192,
+            "usb": true,
+            "Version": 14,
+            "network": "nat",
+            "network_adapter_type": "e1000e",
+            "disk_adapter_type": "lsisas1068",
+            "cdrom_adapter_type": "sata"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "powershell",
+            "scripts": [
+                "./scripts/install-ndp45.ps1",
+                "./scripts/disable-autologin.ps1",
+                "./scripts/disable-hibernate.ps1"
+            ]
+        },
+        {
+            "type": "windows-restart",
+            "pause_before": "15s"
+        },
+        {
+            "type": "powershell",
+            "pause_before": "15s",
+            "scripts": [
+                "./scripts/install-wmf5.ps1",
+                "./scripts/install-KB2999226.ps1"
+            ]
+        },
+        {
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+            "pause_before": "10s",
+            "inline": [
+                "Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))",
+                "choco install -y 7zip.portable curl wget jq tcping"
+            ]
+        },
+        {
+            "type": "powershell",
+            "scripts": [
+                "./scripts/install-ps-modules.ps1",
+                "./scripts/install-vs2017redist.ps1"
+            ]
+        },
+        {
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+            "pause_before": "10s",
+            "scripts": [
+                "./scripts/install-guest-tools-on-win7.ps1"
+            ]
+        },
+        {
+            "type": "file",
+            "source": "./win7/{{user `win_media`}}/sysprep/",
+            "destination": "c:/windows/temp/sysprep"
+        },
+        {
+            "type": "file",
+            "source": "./scripts/packer_shutdown_win10.cmd",
+            "destination": "c:/windows/temp/packer_shutdown.cmd"
+        },
+        {
+            "type": "file",
+            "source": "./scripts/SetupComplete_win10.cmd",
+            "destination": "c:/windows/setup/scripts/SetupComplete.cmd"
+        },
+        {
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+            "scripts": [
+                "./scripts/install-windows-update-on-win7.ps1"
+            ]
+        },
+        {
+            "pause_before": "5m",
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+            "pause_before": "2m",
+            "scripts": [
+                "./scripts/install-windows-update-on-win7.ps1"
+            ]
+        },
+        {
+            "pause_before": "5m",
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+            "pause_before": "2m",
+            "scripts": [
+                "./scripts/install-windows-update-on-win7.ps1"
+            ]
+        },
+        {
+            "pause_before": "1m",
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+            "pause_before": "1m",
+            "scripts": [
+                "./scripts/install-windows-update-on-win7.ps1"
+            ]
+        },
+        {
+            "pause_before": "1m",
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+            "pause_before": "1m",
+            "scripts": [
+                "./scripts/install-windows-update-on-win7.ps1"
+            ]
+        },
+        {
+            "pause_before": "1m",
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+            "pause_before": "1m",
+            "inline": [
+                "Start-Sleep 10"
+            ]
+        }
+    ],
+    "post-processors": []
+}
