@@ -7,20 +7,16 @@ Packer templates (VMware/VirtualBox)
 * Windows 7 Enterprise / 64-bit
   * Windows 7 with SP1 English / Korean
 * Windows 10 SAC (Semi-Annual Channel) / 64-bit
-  * SAC 1809 Enterprise English / Korean
-  * SAC 1809 Enterprise Evaulation
+  * SAC 1809 Enterprise English / Korean / Evaluation
 * Windows 10 LTSC (Long-Term Servicing Channel) / 64-bit
-  * LTSC 2019 Enterprise English / Korean
-  * LTSC 2019 Enterprise Evaulation
+  * LTSC 2019 Enterprise English / Korean / Evaluation
 * Windows Server SAC (Semi-Annual Channel) 
   * SAC 1809 Datacenter English (Server Core)
 * Windows Server LTSC (Long-Term Servicing Channel) 2019 
-  * LTSC 2019 Datacenter English / Korean (with Desktop experience)
-  * LTSC 2019 Datacenter Evaulation (with Desktop experience)
+  * LTSC 2019 Datacenter English / Korean / Evaluation (with Desktop experience)
   * LTSC 2019 Datacenter English (Server Core)
 * Windows Server LTSB (Long-Term Servicing Branch) 2016 
-  * LTSB 2016 Datacenter English / Korean  (with Desktop experience)
-  * LTSB 2016 Datacenter Evaulation (with Desktop experience)
+  * LTSB 2016 Datacenter English / Korean / Evaluation (with Desktop experience)
   * LTSB 2016 Datacenter English (Server Core)
 * Ubuntu
   * Ubuntu Server 16.04 / 64-bit

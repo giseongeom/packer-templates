@@ -50,5 +50,4 @@
             <DoNotCleanUpNonPresentDevices>true</DoNotCleanUpNonPresentDevices>
         </component>
     </settings>
-    <cpi:offlineImage cpi:source="wim:c:/temp/amd64_windows8_ent_en-us/install.wim#Windows 8 Enterprise" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
 </unattend>

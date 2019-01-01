@@ -6,10 +6,19 @@ $ifaceinfo = Get-NetConnectionProfile
 Set-NetConnectionProfile -InterfaceIndex $ifaceinfo.InterfaceIndex -NetworkCategory Private 
 
 # Set up WinRM and configure some things
+# https://support.microsoft.com/en-us/help/2742246/how-to-troubleshoot-the-needs-attention-and-not-responding-host-status
+# http://www.isolation.se/the-request-size-exceeded-the-configured-maxenvelopesize-quota/
 Enable-PSRemoting -SkipNetworkProfileCheck -Force
 winrm quickconfig -q
-winrm set "winrm/config" '@{MaxTimeoutms="1800000"}'
-winrm set "winrm/config/winrs" '@{MaxMemoryPerShellMB="2048"}'
+winrm set "winrm/config" '@{MaxTimeoutms="3600000"}'
+winrm set "winrm/config" '@{MaxEnvelopeSizekb=”16384"}'
+winrm set "winrm/config/winrs" '@{MaxMemoryPerShellMB="4096"}'
+winrm set "winrm/config/winrs" '@{MaxProcessesPerShell="100"}'
+winrm set "winrm/config/winrs" '@{MaxConcurrentUsers="100"}'
+winrm set "winrm/config/winrs" '@{MaxShellsPerUser="100"}'
+winrm set "winrm/config/client" '@{AllowUnencrypted="true"}'
+winrm set "winrm/config/client/auth" '@{Basic="true"}'
+winrm set "winrm/config/service" '@{MaxConcurrentOperationsPerUser="1500"}'
 winrm set "winrm/config/service" '@{AllowUnencrypted="true"}'
 winrm set "winrm/config/service/auth" '@{Basic="true"}'
 
