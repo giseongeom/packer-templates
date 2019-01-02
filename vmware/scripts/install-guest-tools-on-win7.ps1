@@ -52,8 +52,3 @@ if ($ENV:PACKER_BUILDER_TYPE -eq "vmware-iso") {
     virtualbox
 }
 
-#Time to clean up - dismount the image and delete the original ISO
-#Write-Output "Removing disk image $iso_extracted_path"
-#Remove-Item $iso_extracted_path -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
-#Write-Output "Deleting $isopath"
-#Remove-Item $isopath
