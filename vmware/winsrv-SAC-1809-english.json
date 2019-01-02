@@ -22,11 +22,9 @@
             "winrm_username": "administrator",
             "winrm_password": "vagrant",
             "winrm_timeout": "6h",
-            "headless": true,
+            "headless": false,
             "skip_compaction": false,
             "keep_registered": false,
-            "tools_upload_flavor": "windows",
-            "tools_upload_path": "c:/Windows/Temp/windows.iso",
             "shutdown_command": "C:/Windows/temp/packer_shutdown.cmd",
             "shutdown_timeout": "1h",
             "cpus": 2,
@@ -53,26 +51,20 @@
             "winrm_username": "administrator",
             "winrm_password": "vagrant",
             "winrm_timeout": "6h",
-            "headless": true,
+            "headless": false,
             "skip_export": false,
             "keep_registered": false,
-            "guest_additions_mode": "attach",
+            "guest_additions_mode": "disable",
             "shutdown_command": "C:/Windows/temp/packer_shutdown.cmd",
             "shutdown_timeout": "1h",
             "vboxmanage": [
-                [
-                    "modifyvm",
-                    "{{.Name}}",
-                    "--vram",
-                    "32"
-                ]
+                [ "modifyvm", "{{.Name}}", "--vram", "32" ]
             ],
             "cpus": 2,
             "memory": 8192,
             "usb": true,
             "hard_drive_interface": "sata",
-            "sata_port_count": 4,
-            "iso_interface": "ide"
+            "iso_interface": "sata"
         }
     ],
     "provisioners": [
@@ -80,7 +72,7 @@
             "type": "powershell",
             "scripts": [
                 "./scripts/install-ps-modules.ps1",
-                "./scripts/install-guest-tools.ps1"
+                "./scripts/install-guest-tools-on-win10.ps1"
             ]
         },
         {
