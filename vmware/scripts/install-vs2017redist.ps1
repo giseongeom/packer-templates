@@ -15,3 +15,6 @@ IF (Test-Path $vs2017_redist_x64_path) {
 IF (Test-Path $vs2017_redist_x86_path) {
     Start-process -Wait -Verbose -FilePath $vs2017_redist_x86_path -ArgumentList '/install /quiet /norestart' -NoNewWindow
 }
+
+# To avoid unexpected $LASTEXITCODE other than 0 (zero)
+exit 0

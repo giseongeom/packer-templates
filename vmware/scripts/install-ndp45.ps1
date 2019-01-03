@@ -7,4 +7,5 @@ IF (Test-Path $ndp45_path) {
     Start-Process -Wait -FilePath $ndp45_path -ArgumentList '/q /norestart' -NoNewWindow -Verbose
 } 
 
+# To avoid unexpected $LASTEXITCODE other than 0 (zero)
 exit 0

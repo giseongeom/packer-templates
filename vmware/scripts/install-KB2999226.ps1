@@ -11,12 +11,12 @@ Function Get-OSVersion {
         $returnValue = 'win10'
     }
 
-    ## OS is Windows 7
+    ## OS is Windows 8.1
     if ($BuildVersion.Major -eq '6' -and $BuildVersion.Minor -eq '3') {
         $returnValue = 'win8.1'
     }
 
-    ## OS is Windows 7
+    ## OS is Windows 8
     if ($BuildVersion.Major -eq '6' -and $BuildVersion.Minor -eq '2') {
         $returnValue = 'win8'
     }
@@ -66,5 +66,6 @@ Switch (Get-OSVersion) {
     }
 }
 
-
+# dism exit code is 3010 when a reboot is required.
+# https://cloudywindows.io/windowsinstallererrorcodes/
 exit 0

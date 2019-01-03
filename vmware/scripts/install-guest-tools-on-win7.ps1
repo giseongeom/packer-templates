@@ -1,15 +1,16 @@
 #Requires -version 5
 
 if ($ENV:PACKER_BUILDER_TYPE -eq "vmware-iso") {
-  # VMware tools 10.3.5
-  $iso_url  = 'https://packages.vmware.com/tools/esx/latest/windows/VMware-tools-windows-10.3.5-10430147.iso'
-  $iso_path = "C:\Windows\Temp\windows.iso"
-  (New-Object Net.WebClient).DownloadFile($iso_url, $iso_path) 
-} else {
-  # VirtualBox 6.0.0
-  $iso_url  = 'https://download.virtualbox.org/virtualbox/6.0.0/VBoxGuestAdditions_6.0.0.iso'
-  $iso_path = "C:\Windows\Temp\windows.iso"
-  (New-Object Net.WebClient).DownloadFile($iso_url, $iso_path) 
+    # VMware tools 10.3.5
+    $iso_url = 'https://packages.vmware.com/tools/esx/latest/windows/VMware-tools-windows-10.3.5-10430147.iso'
+    $iso_path = "C:\Windows\Temp\windows.iso"
+    (New-Object Net.WebClient).DownloadFile($iso_url, $iso_path) 
+}
+else {
+    # VirtualBox 6.0.0
+    $iso_url = 'https://download.virtualbox.org/virtualbox/6.0.0/VBoxGuestAdditions_6.0.0.iso'
+    $iso_path = "C:\Windows\Temp\windows.iso"
+    (New-Object Net.WebClient).DownloadFile($iso_url, $iso_path) 
 }
 $iso_extracted_path = "C:\Windows\temp\vmtools"
 Write-Output "Extracting disk image to $iso_extracted_path ......"
@@ -34,21 +35,24 @@ function virtualbox {
     
     if (Test-Path ($VBoxCertUtil)) {
         Write-Output "Using newer (4.4 and above) certificate import method"
-    	Get-ChildItem $certdir *.cer | ForEach-Object { & $VBoxCertUtil add-trusted-publisher $_.FullName --root $_.FullName}
+        Get-ChildItem $certdir *.cer | ForEach-Object { & $VBoxCertUtil add-trusted-publisher $_.FullName --root $_.FullName}
     }
     
     $exe = 'c:\windows\temp\vmtools\VBoxWindowsAdditions.exe'
     $parameters = '/S'
     Start-Process -FilePath $exe -ArgumentList $parameters -Wait -Verbose
-
 }
 
 
 if ($ENV:PACKER_BUILDER_TYPE -eq "vmware-iso") {
     Write-Output "Installing VMWare Guest Tools"
     vmware
-} else {
+}
+else {
     Write-Output "Installing Virtualbox Guest Tools"
     virtualbox
 }
 
+# Due to unexpected LASTEXITCODE of "robocopy"
+# https://blogs.technet.microsoft.com/deploymentguys/2008/06/16/robocopy-exit-codes/ 
+exit 0

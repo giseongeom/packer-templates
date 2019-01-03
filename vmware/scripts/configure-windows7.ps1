@@ -41,5 +41,3 @@ WMIC USERACCOUNT WHERE Name='vagrant' SET PasswordExpires=FALSE
 
 # Disable Hibernation
 powercfg /H off
-
-exit 0
