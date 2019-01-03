@@ -28,19 +28,6 @@ Function Get-OSVersion {
 }
 
 
-Function Expand-ZIPFile($file, $destination) {
-    If (!(Test-Path $destination)) {
-        Mkdir -Force -ErrorAction SilentlyContinue $destination | out-null
-    }
-    $shell = new-object -com shell.application
-    $zip = $shell.NameSpace($file)
-    foreach ($item in $zip.items()) {
-        $shell.Namespace($destination).copyhere($item)
-    }
-}
-
-
-
 Function install-WMF51for2012r2 {
     $wmf51_file_url = 'http://download.microsoft.com/download/6/F/5/6F5FF66C-6775-42B0-86C4-47D41F2DA187/Win8.1AndW2K12R2-KB3191564-x64.msu'
     Invoke-WebRequest -Uri $wmf51_file_url -OutFile C:\Windows\temp\wmf51.msu -UseBasicParsing
@@ -57,7 +44,7 @@ Function install-WMF51for2008r2 {
     (New-Object Net.WebClient).DownloadFile($wmf51_file_url, $wmf51_zipfile) 
 
     If (Test-Path $wmf51_zipfile) {
-        Expand-ZIPFile -file $wmf51_zipfile -destination $wmf51_root
+        unzip.exe $wmf51_zipfile -d $wmf51_root
 
         If (Test-Path $wmf51_root\Win7AndW2K8R2-KB3191566-x64.msu) {
             Start-Process -wait wusa.exe -ArgumentList 'c:\windows\temp\wmf51\Win7AndW2K8R2-KB3191566-x64.msu /extract:c:\windows\temp\wmf51\src'
@@ -83,4 +70,6 @@ Switch (Get-OSVersion) {
 }
 
 
+# dism exit code is 3010 when a reboot is required.
+# https://cloudywindows.io/windowsinstallererrorcodes/
 exit 0
