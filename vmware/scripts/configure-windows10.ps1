@@ -26,7 +26,5 @@ New-Item -Path C:\Windows\Setup\Scripts -ItemType directory -Force
 New-Item -Path C:\Windows\Panther\Unattend -ItemType directory -Force
 
 # No Expiration
-Set-LocalUser -AccountNeverExpires -PasswordNeverExpires -Name 'vagrant'       -Confirm:$false
-Set-LocalUser -AccountNeverExpires -PasswordNeverExpires -Name 'Administrator' -Confirm:$false
-
-exit 0
+Set-LocalUser -AccountNeverExpires -PasswordNeverExpires $true -Name 'vagrant'       -Confirm:$false
+Set-LocalUser -AccountNeverExpires -PasswordNeverExpires $true -Name 'Administrator' -Confirm:$false
