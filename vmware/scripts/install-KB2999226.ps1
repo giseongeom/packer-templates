@@ -51,6 +51,19 @@ Function install-KB2999226for2008r2 {
 }
 
 
+Function install-KB2999226for2012r2 {
+    $file_url = 'https://download.microsoft.com/download/D/1/3/D13E3150-3BB2-4B22-9D8A-47EE2D609FFF/Windows8.1-KB2999226-x64.msu'
+    $file_path = 'c:\windows\temp\Windows8.1-KB2999226-x64.msu' 
+    (New-Object Net.WebClient).DownloadFile($file_url, $file_path) 
+
+    If (Test-Path $file_path) {
+        Start-Process -wait wusa.exe -ArgumentList 'C:\Windows\temp\Windows8.1-KB2999226-x64.msu /extract:C:\Windows\temp\KB2999226' -NoNewWindow
+        dism.exe /online /add-package /norestart /quiet /PackagePath:C:\Windows\temp\KB2999226\Windows8.1-KB2999226-x64.cab
+    }
+}
+
+
+
 
 
 Switch (Get-OSVersion) {
@@ -59,6 +72,12 @@ Switch (Get-OSVersion) {
         install-KB2999226for2008r2
         BREAK 
     }
+
+    'win8.1' {
+        install-KB2999226for2012r2
+        BREAK 
+    }
+
 
     default {
         Get-OSVersion
