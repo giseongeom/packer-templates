@@ -1,4 +1,4 @@
-# Supress network location Prompt
+﻿# Supress network location Prompt
 New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Network\NewNetworkWindowOff" -Force
 
 # Set network to private
@@ -40,4 +40,5 @@ net user vagrant /expires:never
 WMIC USERACCOUNT WHERE Name='vagrant' SET PasswordExpires=FALSE
 
 # Disable Hibernation
-powercfg /H off
+& powercfg.exe /H off
+& powercfg /s 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
