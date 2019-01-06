@@ -58,7 +58,12 @@
             "shutdown_command": "C:/Windows/temp/packer_shutdown.cmd",
             "shutdown_timeout": "1h",
             "vboxmanage": [
-                [ "modifyvm", "{{.Name}}", "--vram", "32" ]
+                [
+                    "modifyvm",
+                    "{{.Name}}",
+                    "--vram",
+                    "32"
+                ]
             ],
             "cpus": 2,
             "memory": 8192,
@@ -72,6 +77,8 @@
             "type": "powershell",
             "scripts": [
                 "./scripts/install-ps-modules.ps1",
+                "./scripts/install-chocolatey.ps1",
+                "./scripts/disable-autologin.ps1",
                 "./scripts/install-guest-tools-on-win10.ps1"
             ]
         },
@@ -96,8 +103,7 @@
         {
             "type": "powershell",
             "scripts": [
-                "./scripts/install-windows-update-on-win10.ps1",
-                "./scripts/disable-autologin.ps1"
+                "./scripts/install-windows-update-on-win10.ps1"
             ]
         },
         {

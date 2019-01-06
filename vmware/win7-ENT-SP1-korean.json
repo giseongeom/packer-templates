@@ -42,6 +42,7 @@
             "type": "powershell",
             "scripts": [
                 "./scripts/install-ndp45.ps1",
+                "./scripts/install-chocolatey.ps1",
                 "./scripts/disable-autologin.ps1",
                 "./scripts/disable-hibernate.ps1"
             ]
@@ -63,14 +64,6 @@
         },
         {
             "type": "powershell",
-            "pause_before": "10s",
-            "inline": [
-                "Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))",
-                "choco install -y 7zip.portable curl wget jq tcping"
-            ]
-        },
-        {
-            "type": "powershell",
             "scripts": [
                 "./scripts/install-ps-modules.ps1",
                 "./scripts/install-vs2017redist.ps1"
@@ -85,6 +78,10 @@
             "scripts": [
                 "./scripts/install-guest-tools-on-win7.ps1"
             ]
+        },
+        {
+            "type": "windows-restart",
+            "pause_before": "15s"
         },
         {
             "type": "file",
@@ -102,9 +99,6 @@
             "destination": "c:/windows/setup/scripts/SetupComplete.cmd"
         },
         {
-            "type": "windows-restart"
-        },
-        {
             "type": "powershell",
             "scripts": [
                 "./scripts/install-windows-update-on-win7.ps1"
@@ -116,7 +110,7 @@
         },
         {
             "type": "powershell",
-            "pause_before": "2m",
+            "pause_before": "5m",
             "scripts": [
                 "./scripts/install-windows-update-on-win7.ps1"
             ]
