@@ -18,16 +18,18 @@ Packer templates (VMware/VirtualBox)
 * Windows Server LTSB (Long-Term Servicing Branch) 2016 
   * LTSB 2016 Datacenter English / Korean / Evaluation (with Desktop experience)
   * LTSB 2016 Datacenter English (Server Core)
+* Windows Server 2012 R2 Datacenter
+  * 2012 R2 English / Korean / Evaluation (with Desktop experience)
+  * 2012 R2 English (Server Core)
+* Windows Server 2008 R2 Enterprise
+  * 2008 R2 with SP1 English / Korean / Evaluation (with Desktop experience)
+  * 2008 R2 with SP1 English (Server Core)
 * Ubuntu
   * Ubuntu Server 16.04 / 64-bit
 
 
-## Work-In-Progress
-* Windows Server 2008 R2
-* Windows Server 2012 R2
-
-
 ## Test/Build Environment
+
 * packer 1.3.3
 * Windows 10 1809 (64-bit)
 * VMware Workstation 15.0.2
