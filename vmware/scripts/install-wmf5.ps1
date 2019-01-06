@@ -8,6 +8,16 @@ Function Get-OSVersion {
         $returnValue = 'win10'
     }
 
+    ## OS is Windows 8.1
+    if ($BuildVersion.Major -eq '6' -and $BuildVersion.Minor -eq '3') {
+        $returnValue = 'win8.1'
+    }
+
+    ## OS is Windows 8
+    if ($BuildVersion.Major -eq '6' -and $BuildVersion.Minor -eq '2') {
+        $returnValue = 'win8'
+    }
+
     ## OS is Windows 7
     if ($BuildVersion.Major -eq '6' -and $BuildVersion.Minor -eq '1') {
         $returnValue = 'win7'
@@ -30,12 +40,17 @@ Function Get-OSVersion {
 
 Function install-WMF51for2012r2 {
     $wmf51_file_url = 'http://download.microsoft.com/download/6/F/5/6F5FF66C-6775-42B0-86C4-47D41F2DA187/Win8.1AndW2K12R2-KB3191564-x64.msu'
-    Invoke-WebRequest -Uri $wmf51_file_url -OutFile C:\Windows\temp\wmf51.msu -UseBasicParsing
-    Start-Process -wait wusa.exe -ArgumentList 'C:\Windows\Temp\wmf51.msu /extract:C:\Windows\temp\wmf51src'
-    dism.exe /online /add-package /norestart /quiet /PackagePath:C:\Windows\temp\wmf51src\WindowsBlue-KB3191564-x64.cab
+    $wmf51_root     = 'C:\Windows\temp\wmf51'
+    $wmf51_file     = 'c:\Windows\temp\wmf51\Win8.1AndW2K12R2-KB3191564-x64.msu'
+    mkdir -Force -ErrorAction SilentlyContinue $wmf51_root
+    (New-Object Net.WebClient).DownloadFile($wmf51_file_url, $wmf51_file) 
+
+    If (Test-path $wmf51_file) {
+        Start-Process -wait wusa.exe -ArgumentList 'c:\windows\temp\wmf51\Win8.1AndW2K12R2-KB3191564-x64.msu /extract:c:\windows\temp\wmf51\src'
+        dism.exe /online /add-package /norestart /quiet /PackagePath:c:\windows\temp\wmf51\src\WindowsBlue-KB3191564-x64.cab
+    }
 }
 
-Function install-WMF51for2012 {}
 
 Function install-WMF51for2008r2 {
     $wmf51_file_url = 'https://download.microsoft.com/download/6/F/5/6F5FF66C-6775-42B0-86C4-47D41F2DA187/Win7AndW2K8R2-KB3191566-x64.zip'
@@ -60,6 +75,11 @@ Switch (Get-OSVersion) {
 
     'win7' {
         install-WMF51for2008r2
+        BREAK 
+    }
+
+    'win8.1' {
+        install-WMF51for2012r2
         BREAK 
     }
 
