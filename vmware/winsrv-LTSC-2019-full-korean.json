@@ -25,8 +25,6 @@
             "headless": false,
             "skip_compaction": true,
             "keep_registered": false,
-            "tools_upload_flavor": "windows",
-            "tools_upload_path": "c:/Windows/Temp/windows.iso",
             "shutdown_command": "C:/Windows/temp/packer_shutdown.cmd",
             "cpus": 2,
             "memory": 8192,
@@ -43,7 +41,8 @@
             "type": "powershell",
             "scripts": [
                 "./scripts/install-ps-modules.ps1",
-                "./scripts/install-guest-tools.ps1"
+                "./scripts/install-chocolatey.ps1",
+                "./scripts/install-guest-tools-on-win10.ps1"
             ]
         },
         {
