@@ -23,7 +23,7 @@
             "winrm_password": "vagrant",
             "winrm_timeout": "6h",
             "headless": false,
-            "skip_compaction": false,
+            "skip_compaction": true,
             "keep_registered": false,
             "shutdown_command": "C:/Windows/temp/packer_shutdown.cmd",
             "shutdown_timeout": "1h",
