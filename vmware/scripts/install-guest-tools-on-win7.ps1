@@ -1,17 +1,17 @@
 #Requires -version 5
 
 if ($ENV:PACKER_BUILDER_TYPE -eq "vmware-iso") {
-    # VMware tools 10.3.5
-    $iso_url = 'https://packages.vmware.com/tools/esx/latest/windows/VMware-tools-windows-10.3.5-10430147.iso'
+    # VMware tools
+    $iso_url  = 'https://packages.vmware.com/tools/releases/10.3.10/windows/VMware-tools-windows-10.3.10-12406962.iso'
+    $iso_path = "C:\Windows\Temp\windows.iso"
+    (New-Object Net.WebClient).DownloadFile($iso_url, $iso_path) 
+} else {
+    # VirtualBox Additions
+    $iso_url  = 'https://download.virtualbox.org/virtualbox/6.0.6/VBoxGuestAdditions_6.0.6.iso'
     $iso_path = "C:\Windows\Temp\windows.iso"
     (New-Object Net.WebClient).DownloadFile($iso_url, $iso_path) 
 }
-else {
-    # VirtualBox 6.0.0
-    $iso_url = 'https://download.virtualbox.org/virtualbox/6.0.0/VBoxGuestAdditions_6.0.0.iso'
-    $iso_path = "C:\Windows\Temp\windows.iso"
-    (New-Object Net.WebClient).DownloadFile($iso_url, $iso_path) 
-}
+
 $iso_extracted_path = "C:\Windows\temp\vmtools"
 Write-Output "Extracting disk image to $iso_extracted_path ......"
 7z x -bd -bb0 -oC:\windows\temp\vmtools $iso_path

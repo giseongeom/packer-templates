@@ -41,10 +41,17 @@ Packer templates (VMware/VirtualBox)
 
 ## HOW-TO-BUILD
 
+* VMware
+`packer build -only=vmware-iso win10-SAC-1809-eval.json`
+* Virtualbox
+`packer build -only=virtualbox-iso win10-SAC-1809-eval.json`
+
+
+### Examples
 * Windows 10 SAC 1809 Evaluation
 
-```Powershell
-PS C:\> packer build .\win10-SAC-1809-eval.json
+```powershell
+PS C:\> packer build -only=vmware-iso .\win10-SAC-1809-eval.json
 vmware-iso output will be in this color.
 
 ==> vmware-iso: Retrieving ISO

@@ -1,7 +1,7 @@
 {
     "variables": {
         "floppy_data": "win10/Win_10_ENT_LTSC_2019_Eval/Autounattend.xml,scripts/configure-windows10.ps1",
-        "win10_media": "Win_10_ENT_LTSC_2019_Eval",
+        "install_media": "Win_10_ENT_LTSC_2019_Eval",
         "iso_path": "https://software-download.microsoft.com/download/sg/17763.107.101029-1455.rs5_release_svc_refresh_CLIENT_LTSC_EVAL_x64FRE_en-us.iso",
         "iso_md5": "B254BA13C50D777E4776A98684E11E11"
     },
@@ -9,8 +9,8 @@
         {
             "type": "vmware-iso",
             "disable_vnc": true,
-            "vm_name": "{{user `win10_media`}}-{{isotime \"20060102-1504\"}}",
-            "output_directory": "./output-vmware-iso/{{ timestamp }}-{{user `win10_media`}}-{{isotime \"20060102\"}}",
+            "vm_name": "{{user `install_media`}}-{{isotime \"20060102-1504\"}}",
+            "output_directory": "./output-vmware-iso/{{ timestamp }}-{{user `install_media`}}-{{isotime \"20060102\"}}",
             "communicator": "winrm",
             "disk_type_id": 0,
             "disk_size": 149504,
@@ -50,7 +50,7 @@
         },
         {
             "type": "file",
-            "source": "./win10/{{user `win10_media`}}/sysprep/",
+            "source": "./win10/{{user `install_media`}}/sysprep/",
             "destination": "c:/windows/temp/sysprep"
         },
         {

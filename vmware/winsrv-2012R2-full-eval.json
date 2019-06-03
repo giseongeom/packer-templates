@@ -1,7 +1,7 @@
 {
     "variables": {
         "floppy_data": "winsrv/Win_Svr_2012_R2_DataCtr_Full_Eval/Autounattend.xml,scripts/configure-windows7.ps1",
-        "win_media": "Win_Svr_2012_R2_DataCtr_Full_Eval",
+        "install_media": "Win_Svr_2012_R2_DataCtr_Full_Eval",
         "iso_path": "http://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
         "iso_md5": "5B5E08C490AD16B59B1D9FAB0DEF883A"
     },
@@ -9,8 +9,8 @@
         {
             "type": "vmware-iso",
             "disable_vnc": true,
-            "vm_name": "{{user `win_media`}}-{{isotime \"20060102-1504\"}}",
-            "output_directory": "./output-vmware-iso/{{ timestamp }}-{{user `win_media`}}-{{isotime \"20060102\"}}",
+            "vm_name": "{{user `install_media`}}-{{isotime \"20060102-1504\"}}",
+            "output_directory": "./output-vmware-iso/{{ timestamp }}-{{user `install_media`}}-{{isotime \"20060102\"}}",
             "communicator": "winrm",
             "disk_type_id": 0,
             "disk_size": 149504,
@@ -35,6 +35,41 @@
             "network_adapter_type": "e1000e",
             "disk_adapter_type": "lsisas1068",
             "cdrom_adapter_type": "sata"
+        },
+        {
+            "type": "virtualbox-iso",
+            "vm_name": "{{user `install_media`}}-{{isotime \"2006.01.02-1504\"}}",
+            "output_directory": "./output-virtualbox-iso/{{ timestamp }}-{{user `install_media`}}-{{isotime \"20060102\"}}",
+            "communicator": "winrm",
+            "disk_size": 149504,
+            "floppy_files": "{{user `floppy_data`}}",
+            "guest_os_type": "Windows2016_64",
+            "format": "ovf",
+            "iso_url": "{{user `iso_path`}}",
+            "iso_checksum_type": "md5",
+            "iso_checksum": "{{user `iso_md5`}}",
+            "winrm_username": "administrator",
+            "winrm_password": "vagrant",
+            "winrm_timeout": "6h",
+            "headless": false,
+            "skip_export": false,
+            "keep_registered": false,
+            "guest_additions_mode": "disable",
+            "shutdown_command": "C:/Windows/temp/packer_shutdown.cmd",
+            "shutdown_timeout": "1h",
+            "vboxmanage": [
+                [
+                    "modifyvm",
+                    "{{.Name}}",
+                    "--vram",
+                    "32"
+                ]
+            ],
+            "cpus": 2,
+            "memory": 8192,
+            "usb": true,
+            "hard_drive_interface": "sata",
+            "iso_interface": "sata"
         }
     ],
     "provisioners": [
@@ -105,7 +140,7 @@
         },
         {
             "type": "file",
-            "source": "./winsrv/{{user `win_media`}}/sysprep/",
+            "source": "./winsrv/{{user `install_media`}}/sysprep/",
             "destination": "c:/windows/temp/sysprep"
         },
         {
@@ -127,7 +162,7 @@
             "inline": [
                 "Write-Output 'Installing KB3021910..........'",
                 "cd c:/windows/temp",
-                "wget.exe -nd -nH -q -O Windows8.1-KB3021910-x64.msu https://download.microsoft.com/download/7/7/4/77476115-26DA-42FC-B00F-031D2BB3740F/Windows8.1-KB3021910-x64.msu",
+                "$progressPreference='silentlyContinue' ; Invoke-WebRequest -OutFile ./Windows8.1-KB3021910-x64.msu -UseBasicParsing -Uri https://download.microsoft.com/download/7/7/4/77476115-26DA-42FC-B00F-031D2BB3740F/Windows8.1-KB3021910-x64.msu",
                 "Start-Process -wait wusa.exe -ArgumentList 'C:\\Windows\\temp\\Windows8.1-KB3021910-x64.msu /extract:C:\\Windows\\temp\\KB3021910' -NoNewWindow",
                 "Start-Process -wait dism.exe -ArgumentList '/online /add-package /norestart /quiet /PackagePath:C:\\Windows\\temp\\KB3021910\\Windows8.1-KB3021910-x64.cab' -NoNewWindow",
                 "exit 0"
@@ -142,7 +177,7 @@
             "inline": [
                 "Write-Output 'Installing KB3172614..........'",
                 "cd c:/windows/temp",
-                "wget.exe -nd -nH -q -O Windows8.1-KB3172614-x64.msu https://download.microsoft.com/download/A/8/6/A8686706-78A3-4AC9-ABD2-64DC20A4581F/Windows8.1-KB3172614-x64.msu",
+                "$progressPreference='silentlyContinue' ; Invoke-WebRequest -OutFile ./Windows8.1-KB3172614-x64.msu -UseBasicParsing -Uri https://download.microsoft.com/download/A/8/6/A8686706-78A3-4AC9-ABD2-64DC20A4581F/Windows8.1-KB3172614-x64.msu",
                 "Start-Process -wait wusa.exe -ArgumentList 'C:\\Windows\\temp\\Windows8.1-KB3172614-x64.msu /extract:C:\\Windows\\temp\\KB3172614' -NoNewWindow",
                 "Start-Process -wait dism.exe -ArgumentList '/online /add-package /norestart /quiet /PackagePath:C:\\Windows\\temp\\KB3172614\\Windows8.1-KB3172614-x64.cab' -NoNewWindow",
                 "exit 0"
@@ -157,7 +192,7 @@
             "inline": [
                 "Write-Output 'Installing KB3179574..........'",
                 "cd c:/windows/temp",
-                "wget.exe -nd -nH -q -O Windows8.1-KB3179574-x64.msu https://download.microsoft.com/download/0/E/3/0E303248-4BCD-49CC-A901-0040B055FC3C/Windows8.1-KB3179574-x64.msu",
+                "$progressPreference='silentlyContinue' ; Invoke-WebRequest -OutFile ./Windows8.1-KB3179574-x64.msu -UseBasicParsing -Uri https://download.microsoft.com/download/0/E/3/0E303248-4BCD-49CC-A901-0040B055FC3C/Windows8.1-KB3179574-x64.msu",
                 "Start-Process -wait wusa.exe -ArgumentList 'C:\\Windows\\temp\\Windows8.1-KB3179574-x64.msu /extract:C:\\Windows\\temp\\KB3179574' -NoNewWindow",
                 "Start-Process -wait dism.exe -ArgumentList '/online /add-package /norestart /quiet /PackagePath:C:\\Windows\\temp\\KB3179574\\Windows8.1-KB3179574-x64.cab' -NoNewWindow",
                 "exit 0"
@@ -172,7 +207,7 @@
             "inline": [
                 "Write-Output 'Installing KB3185279..........'",
                 "cd c:/windows/temp",
-                "wget.exe -nd -nH -q -O Windows8.1-KB3185279-x64.msu https://download.microsoft.com/download/6/3/5/635BE005-CC9A-4A7C-B484-7A592054A479/Windows8.1-KB3185279-x64.msu",
+                "$progressPreference='silentlyContinue' ; Invoke-WebRequest -OutFile ./Windows8.1-KB3185279-x64.msu -UseBasicParsing -Uri https://download.microsoft.com/download/6/3/5/635BE005-CC9A-4A7C-B484-7A592054A479/Windows8.1-KB3185279-x64.msu",
                 "Start-Process -wait wusa.exe -ArgumentList 'C:\\Windows\\temp\\Windows8.1-KB3185279-x64.msu /extract:C:\\Windows\\temp\\KB3185279' -NoNewWindow",
                 "Start-Process -wait dism.exe -ArgumentList '/online /add-package /norestart /quiet /PackagePath:C:\\Windows\\temp\\KB3185279\\Windows8.1-KB3185279-x64.cab' -NoNewWindow",
                 "exit 0"
@@ -199,37 +234,37 @@
             ]
         },
         {
-            "pause_before": "2m",
+            "pause_before": "10m",
             "restart_timeout": "60m",
             "type": "windows-restart"
         },
         {
             "type": "powershell",
-            "pause_before": "2m",
+            "pause_before": "5m",
             "scripts": [
                 "./scripts/install-windows-update-on-win7.ps1"
             ]
         },
         {
-            "pause_before": "2m",
-            "restart_timeout": "30m",
+            "pause_before": "10m",
+            "restart_timeout": "60m",
             "type": "windows-restart"
         },
         {
             "type": "powershell",
-            "pause_before": "2m",
+            "pause_before": "5m",
             "scripts": [
                 "./scripts/install-windows-update-on-win7.ps1"
             ]
         },
         {
-            "pause_before": "1m",
-            "restart_timeout": "30m",
+            "pause_before": "5m",
+            "restart_timeout": "60m",
             "type": "windows-restart"
         },
         {
             "type": "powershell",
-            "pause_before": "1m",
+            "pause_before": "5m",
             "scripts": [
                 "./scripts/install-windows-update-on-win7.ps1"
             ]

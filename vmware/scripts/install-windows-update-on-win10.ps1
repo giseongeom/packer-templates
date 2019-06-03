@@ -43,3 +43,5 @@ if ($null -ne $updates) {
     }
 }
 
+# To avoid unexpected $LASTEXITCODE other than 0 (zero)
+exit 0

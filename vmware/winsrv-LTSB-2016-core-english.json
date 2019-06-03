@@ -34,6 +34,41 @@
             "network_adapter_type": "e1000e",
             "disk_adapter_type": "lsisas1068",
             "cdrom_adapter_type": "sata"
+        },
+        {
+            "type": "virtualbox-iso",
+            "vm_name": "{{user `install_media`}}-{{isotime \"2006.01.02-1504\"}}",
+            "output_directory": "./output-virtualbox-iso/{{ timestamp }}-{{user `install_media`}}-{{isotime \"20060102\"}}",
+            "communicator": "winrm",
+            "disk_size": 149504,
+            "floppy_files": "{{user `floppy_data`}}",
+            "guest_os_type": "Windows2016_64",
+            "format": "ovf",
+            "iso_url": "{{user `iso_path`}}",
+            "iso_checksum_type": "md5",
+            "iso_checksum": "{{user `iso_md5`}}",
+            "winrm_username": "administrator",
+            "winrm_password": "vagrant",
+            "winrm_timeout": "6h",
+            "headless": false,
+            "skip_export": false,
+            "keep_registered": false,
+            "guest_additions_mode": "disable",
+            "shutdown_command": "C:/Windows/temp/packer_shutdown.cmd",
+            "shutdown_timeout": "1h",
+            "vboxmanage": [
+                [
+                    "modifyvm",
+                    "{{.Name}}",
+                    "--vram",
+                    "32"
+                ]
+            ],
+            "cpus": 2,
+            "memory": 8192,
+            "usb": true,
+            "hard_drive_interface": "sata",
+            "iso_interface": "sata"
         }
     ],
     "provisioners": [
