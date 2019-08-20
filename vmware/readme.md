@@ -8,6 +8,7 @@ Packer templates (VMware/VirtualBox)
   * Windows 7 with SP1 English / Korean
 * Windows 10 SAC (Semi-Annual Channel) / 64-bit
   * SAC 1809 Enterprise English / Korean / Evaluation
+  * SAC 1903 Enterprise English / Korean / Evaluation
 * Windows 10 LTSC (Long-Term Servicing Channel) / 64-bit
   * LTSC 2019 Enterprise English / Korean / Evaluation
 * Windows Server SAC (Semi-Annual Channel) 
