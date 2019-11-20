@@ -1,8 +1,8 @@
 {
     "variables": {
-        "install_media": "Win_10_ENT_SAC_1903_Eval",
-        "iso_path": "https://software-download.microsoft.com/download/pr/18362.30.190401-1528.19h1_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",
-        "iso_md5": "70c7e8f0599bbb4526f08e6814925e50"
+        "install_media": "Win_10_ENT_SAC_Eval",
+        "iso_path": "https://software-download.microsoft.com/download/pr/18363.418.191007-0143.19h2_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",
+        "iso_md5": "b3cd4bae54e74f1ca497216a3f347ca7"
     },
     "builders": [
         {
@@ -33,41 +33,6 @@
             "network_adapter_type": "e1000e",
             "disk_adapter_type": "lsisas1068",
             "cdrom_adapter_type": "sata"
-        },
-        {
-            "type": "virtualbox-iso",
-            "vm_name": "{{user `install_media`}}-{{isotime \"2006.01.02-1504\"}}",
-            "output_directory": "./output-virtualbox-iso/{{ timestamp }}-{{user `install_media`}}-{{isotime \"20060102\"}}",
-            "communicator": "winrm",
-            "disk_size": 149504,
-            "floppy_files": "{{user `floppy_data`}}",
-            "guest_os_type": "Windows10_64",
-            "format": "ovf",
-            "iso_url": "{{user `iso_path`}}",
-            "iso_checksum_type": "md5",
-            "iso_checksum": "{{user `iso_md5`}}",
-            "winrm_username": "administrator",
-            "winrm_password": "vagrant",
-            "winrm_timeout": "6h",
-            "headless": false,
-            "skip_export": false,
-            "keep_registered": false,
-            "guest_additions_mode": "disable",
-            "shutdown_command": "C:/Windows/temp/packer_shutdown.cmd",
-            "shutdown_timeout": "1h",
-            "vboxmanage": [
-                [
-                    "modifyvm",
-                    "{{.Name}}",
-                    "--vram",
-                    "32"
-                ]
-            ],
-            "cpus": 2,
-            "memory": 8192,
-            "usb": true,
-            "hard_drive_interface": "sata",
-            "iso_interface": "sata"
         }
     ],
     "provisioners": [
