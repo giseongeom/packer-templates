@@ -1,8 +1,8 @@
 {
     "variables": {
         "install_media": "Win_10_ENT_SAC_English",
-        "iso_path": "f:/iso/Microsoft/Win10_1909/SW_DVD9_Win_Pro_10_1909_64BIT_English_Pro_Ent_EDU_N_MLF_X22-17395.ISO",
-        "iso_md5": "d01ef7428f69040e2d9bf027878690de"
+        "iso_path": "w:/iso/Microsoft/Win10_2004/SW_DVD9_Win_Pro_10_2004_64BIT_English_Pro_Ent_EDU_N_MLF_-2_X22-29752.ISO",
+        "iso_md5": "72be410c3bfbc01e1f39cf724ee26965"
     },
     "builders": [
         {

@@ -1,4 +1,4 @@
-Packer templates (VMware/VirtualBox)
+Packer templates (VMware)
 ============================
 
 
@@ -10,8 +10,6 @@ Packer templates (VMware/VirtualBox)
   * Enterprise English / Korean / Evaluation
 * Windows 10 LTSC (Long-Term Servicing Channel) / 64-bit
   * LTSC 2019 Enterprise English / Korean / Evaluation
-* Windows Server SAC (Semi-Annual Channel) 
-  * Datacenter English (Server Core)
 * Windows Server LTSC (Long-Term Servicing Channel) 2019 
   * LTSC 2019 Datacenter English / Korean / Evaluation (with Desktop experience)
   * LTSC 2019 Datacenter English (Server Core)
@@ -30,10 +28,10 @@ Packer templates (VMware/VirtualBox)
 
 ## Test/Build Environment
 
-* packer 1.3.3
-* Windows 10 1809 (64-bit)
-* VMware Workstation 15.0.2
-* VirtualBox 5.2.22
+* packer 1.x
+* Windows 10 2004 (64-bit)
+* VMware Workstation 15
+* VirtualBox 6.x
 * Visual Studio Code
 * Conemu
 * Powershell 6
@@ -42,9 +40,9 @@ Packer templates (VMware/VirtualBox)
 ## HOW-TO-BUILD
 
 * VMware
-`packer build -only=vmware-iso win10-SAC-1809-eval.json`
+`packer build -only=vmware-iso win10-SAC-english.json`
 * Virtualbox
-`packer build -only=virtualbox-iso win10-SAC-1809-eval.json`
+`packer build -only=virtualbox-iso win10-SAC-english.json`
 
 
 ### Examples

@@ -1,8 +1,8 @@
 {
     "variables": {
         "install_media": "Win_10_ENT_SAC_Korean",
-        "iso_path": "f:/iso/Microsoft/Win10_1909/SW_DVD9_Win_Pro_10_1909_64BIT_Korean_Pro_Ent_EDU_N_MLF_X22-17406.ISO",
-        "iso_md5": "5c33fd03b036a80cd34c1c5936540704"
+        "iso_path": "w:/iso/Microsoft/Win10_2004/SW_DVD9_Win_Pro_10_2004_64BIT_Korean_Pro_Ent_EDU_N_MLF_-2_X22-29763.ISO",
+        "iso_md5": "45ba88a555052864cf7a37c32a7b741e"
     },
     "builders": [
         {

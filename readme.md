@@ -2,7 +2,7 @@
 
 ## Virtualization Environment
 
-### VMware/VirtualBox
+### VMware Workstation
 
 * `vmware/`
   
