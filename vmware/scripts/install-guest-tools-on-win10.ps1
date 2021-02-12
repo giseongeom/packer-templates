@@ -2,7 +2,8 @@
 
 if ($ENV:PACKER_BUILDER_TYPE -eq "vmware-iso") {
     # VMware tools
-    $iso_url  = 'https://packages.vmware.com/tools/releases/11.0.1/windows/VMware-tools-windows-11.0.1-14773994.iso'
+    #$iso_url  = 'https://packages.vmware.com/tools/releases/11.0.1/windows/VMware-tools-windows-11.0.1-14773994.iso'
+    $iso_url  = 'https://packages.vmware.com/tools/releases/11.2.5/windows/VMware-tools-windows-11.2.5-17337674.iso'
     $iso_path = "C:\Windows\Temp\windows.iso"
     (New-Object Net.WebClient).DownloadFile($iso_url, $iso_path)
 } else {

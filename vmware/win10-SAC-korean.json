@@ -1,8 +1,8 @@
 {
     "variables": {
         "install_media": "Win_10_ENT_SAC_Korean",
-        "iso_path": "w:/iso/Microsoft/Win10_2004/SW_DVD9_Win_Pro_10_2004_64BIT_Korean_Pro_Ent_EDU_N_MLF_-2_X22-29763.ISO",
-        "iso_md5": "45ba88a555052864cf7a37c32a7b741e"
+        "iso_path": "f:/iso/Microsoft/Win10_20H2/SW_DVD9_Win_Pro_10_20H2_64BIT_Korean_Pro_Ent_EDU_N_MLF_-2_X22-41532.ISO",
+        "iso_md5": "5b5731e49f9e06a2869a556322dc2ed1"
     },
     "builders": [
         {
@@ -16,7 +16,6 @@
             "floppy_files": "win10/{{user `install_media`}}/Autounattend.xml,scripts/configure-windows10.ps1",
             "guest_os_type": "windows9-64",
             "iso_url": "{{user `iso_path`}}",
-            "iso_checksum_type": "md5",
             "iso_checksum": "{{user `iso_md5`}}",
             "winrm_username": "administrator",
             "winrm_password": "vagrant",
@@ -76,7 +75,7 @@
         },
         {
             "type": "powershell",
-            "pause_before": "10s",
+            "pause_before": "5m",
             "scripts": [
                 "./scripts/install-windows-update-on-win10.ps1"
             ]

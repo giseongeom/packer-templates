@@ -1,8 +1,8 @@
 {
     "variables": {
         "install_media": "Win_10_ENT_SAC_English",
-        "iso_path": "w:/iso/Microsoft/Win10_2004/SW_DVD9_Win_Pro_10_2004_64BIT_English_Pro_Ent_EDU_N_MLF_-2_X22-29752.ISO",
-        "iso_md5": "72be410c3bfbc01e1f39cf724ee26965"
+        "iso_path": "f:/iso/Microsoft/Win10_20H2/SW_DVD9_Win_Pro_10_20H2_64BIT_English_Pro_Ent_EDU_N_MLF_-2_X22-41520.ISO",
+        "iso_md5": "436a66d36e590b4714b4d75878c8c22c"
     },
     "builders": [
         {
@@ -16,7 +16,6 @@
             "floppy_files": "win10/{{user `install_media`}}/Autounattend.xml,scripts/configure-windows10.ps1",
             "guest_os_type": "windows9-64",
             "iso_url": "{{user `iso_path`}}",
-            "iso_checksum_type": "md5",
             "iso_checksum": "{{user `iso_md5`}}",
             "winrm_username": "administrator",
             "winrm_password": "vagrant",
@@ -75,7 +74,7 @@
             "type": "windows-restart"
         },
         {
-            "pause_before": "10s",
+            "pause_before": "5m",
             "type": "powershell",
             "scripts": [
                 "./scripts/install-windows-update-on-win10.ps1"
