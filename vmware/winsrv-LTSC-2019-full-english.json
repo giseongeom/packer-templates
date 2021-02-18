@@ -2,8 +2,8 @@
     "variables": {
         "floppy_data": "winsrv/Win_Svr_2019_DataCtr_LTSC_Full_English/Autounattend.xml,scripts/configure-windows10.ps1",
         "install_media": "Win_Svr_2019_DataCtr_LTSC_Full_English",
-        "iso_path": "e:/iso/Microsoft/Windows.Server_2019_LTSC/SW_DVD9_Win_Server_STD_CORE_2019_64Bit_English_DC_STD_MLF_X21-96581.ISO",
-        "iso_md5": "F1222583E87A979C516E431D10AE0B16"
+        "iso_path": "SW_DVD9_Win_Server_STD_CORE_2019_1809.11_64Bit_English_DC_STD_MLF_X22-51041.ISO",
+        "iso_md5": "583FA95FA343BF17D9900292001A3BDA"
     },
     "builders": [
         {
@@ -17,7 +17,6 @@
             "floppy_files": "{{user `floppy_data`}}",
             "guest_os_type": "windows9srv-64",
             "iso_url": "{{user `iso_path`}}",
-            "iso_checksum_type": "md5",
             "iso_checksum": "{{user `iso_md5`}}",
             "winrm_username": "administrator",
             "winrm_password": "vagrant",
@@ -45,7 +44,6 @@
             "guest_os_type": "Windows2016_64",
             "format": "ovf",
             "iso_url": "{{user `iso_path`}}",
-            "iso_checksum_type": "md5",
             "iso_checksum": "{{user `iso_md5`}}",
             "winrm_username": "administrator",
             "winrm_password": "vagrant",
@@ -112,7 +110,7 @@
         },
         {
             "type": "powershell",
-            "pause_before": "10s",
+            "pause_before": "5m",
             "scripts": [
                 "./scripts/install-windows-update-on-win10.ps1"
             ]
