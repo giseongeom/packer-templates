@@ -2,7 +2,7 @@
     "variables": {
         "floppy_data": "winsrv/Win_Svr_2019_DataCtr_LTSC_Full_English/Autounattend.xml,scripts/configure-windows10.ps1",
         "install_media": "Win_Svr_2019_DataCtr_LTSC_Full_English",
-        "iso_path": "SW_DVD9_Win_Server_STD_CORE_2019_1809.11_64Bit_English_DC_STD_MLF_X22-51041.ISO",
+        "iso_path": "e:/iso/SW_DVD9_Win_Server_STD_CORE_2019_1809.11_64Bit_English_DC_STD_MLF_X22-51041.ISO",
         "iso_md5": "583FA95FA343BF17D9900292001A3BDA"
     },
     "builders": [
@@ -33,40 +33,6 @@
             "network_adapter_type": "e1000e",
             "disk_adapter_type": "lsisas1068",
             "cdrom_adapter_type": "sata"
-        },
-        {
-            "type": "virtualbox-iso",
-            "vm_name": "{{user `install_media`}}-{{isotime \"2006.01.02-1504\"}}",
-            "output_directory": "./output-virtualbox-iso/{{ timestamp }}-{{user `install_media`}}-{{isotime \"20060102\"}}",
-            "communicator": "winrm",
-            "disk_size": 149504,
-            "floppy_files": "{{user `floppy_data`}}",
-            "guest_os_type": "Windows2016_64",
-            "format": "ovf",
-            "iso_url": "{{user `iso_path`}}",
-            "iso_checksum": "{{user `iso_md5`}}",
-            "winrm_username": "administrator",
-            "winrm_password": "vagrant",
-            "winrm_timeout": "6h",
-            "headless": false,
-            "skip_export": false,
-            "keep_registered": false,
-            "guest_additions_mode": "disable",
-            "shutdown_command": "C:/Windows/temp/packer_shutdown.cmd",
-            "shutdown_timeout": "1h",
-            "vboxmanage": [
-                [
-                    "modifyvm",
-                    "{{.Name}}",
-                    "--vram",
-                    "32"
-                ]
-            ],
-            "cpus": 2,
-            "memory": 8192,
-            "usb": true,
-            "hard_drive_interface": "sata",
-            "iso_interface": "sata"
         }
     ],
     "provisioners": [
